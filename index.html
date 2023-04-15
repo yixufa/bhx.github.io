@@ -70,44 +70,46 @@ and open the template in the editor.
         (Map, MapView,TileLayer,FeatureLayer,Legend,ScaleBar,Search,LayerList,BasemapGallery,Graphic,Editor,DistanceMeasurement2D,Expand) => {
         
         let tlayer = new TileLayer({url: ""});
-       const layer = new FeatureLayer({url:"https://www.geosceneonline.cn/server/rest/services/Hosted/浙江省地级市要素/FeatureServer"});
-       const layer1 = new FeatureLayer({url:"https://www.geosceneonline.cn/server/rest/services/Hosted/浙江省非物质文化遗产/FeatureServer"});
+       const layer1 = new FeatureLayer({url:"https://www.geosceneonline.cn/server/rest/services/Hosted/浙江1234567/FeatureServer"});
+       const layer = new FeatureLayer({url:"https://www.geosceneonline.cn/server/rest/services/Hosted/浙江省非物质文化遗产/FeatureServer"});
        
         const map = new Map({
           basemap: "topo-vector"
         });
         map.layers.add(tlayer);
-        map.layers.add(layer);
         map.layers.add(layer1);
+        map.layers.add(layer);
         
         //map1.addMany([tlayer, flayer]);
 
         const view = new MapView({
           container: "viewDiv",
           map: map,
-          zoom: 10,
-          center: [50, 80] // longitude, latitude
+          zoom: 7,
+          center: [119.69, 29.2] // longitude, latitude
         });
         
         let legend1 = new Legend({
           view: view,
-          layerInfos:[{layer:layer,title:"浙江省地级市" }]
+          layerInfos:[{layer:layer1,title:"浙江省地级市" }]
         });
-         legendExpand = new Expand({
-         expandIconClass: "esri-icon-legend",  
-         view: view,
-         content: legend1});
-         view.ui.add(legendExpand, "top-right");
+         const legend1Expand = new Expand({
+          view: view,
+          content: legend1,
+          expanded:false
+        });
+        view.ui.add(legend1Expand, {position:"bottom-right"});
       
       let legend2 = new Legend({
           view: view,
-          layerInfos:[{layer:layer1,title:"非遗类型" }]
+          layerInfos:[{layer:layer,title:"非遗类型" }]
         });
-        legend2Expand = new Expand({
-         expandIconClass: "esri-icon-legend",  
-         view: view,
-         content: legend2});
-         view.ui.add(legend2Expand, "top-right");
+        const legend2Expand = new Expand({
+          view: view,
+          content: legend2,
+          expanded:false
+        });
+        view.ui.add(legend2Expand, {position:"bottom-right"});
       
        let scaleBar = new ScaleBar({
          view: view,
@@ -116,8 +118,8 @@ and open the template in the editor.
        });
 
       view.ui.add(scaleBar, {position: "bottom-left"});
-      
-      //query
+    
+    //query
      view.ui.add("optionsDiv", "top-right");
      
      // additional query fields initially set to null for basic query
@@ -209,6 +211,7 @@ and open the template in the editor.
             });
         }
      
+     
      //searchwidget
       const searchWidget = new Search({view: view});
       view.ui.add(searchWidget, {position: "top-right",index: 5});
@@ -223,8 +226,8 @@ and open the template in the editor.
        const editor = new Editor({ view: view});
         view.ui.add(editor, "top-left"); });
         
-        let measurementWidget = new DistanceMeasurement2D({view: view});
-        view.ui.add(measurementWidget, "top-left");
+       let measurementWidget = new DistanceMeasurement2D({view: view});
+        view.ui.add(measurementWidget, "top-right");
         
     </script>
   </head>
